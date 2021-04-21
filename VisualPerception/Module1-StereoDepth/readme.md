@@ -24,7 +24,7 @@ Install the following:
 ### Step 1 - Setup
 
 - Load a pair of stereo images
-- Get calibration to matrixes of each image
+- Get calibration matrices of each image
 
 ![](images/stereo_images.png)
 

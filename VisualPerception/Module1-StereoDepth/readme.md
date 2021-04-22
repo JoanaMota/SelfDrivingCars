@@ -51,7 +51,7 @@ Install the following:
 - Normally now we would run an object detector that has been trained to select a rectangular section containing the object we are concerned about. Here we have already the objected identified which is provided by the function `get_obstacle_image` from `files_management` script.
 - Now we need to find this object in our scene, for this we use **Cross Correlation**.
 
-  - first we get the cross correlation heat map with [`cv2.minMaxLoc()`](https://docs.opencv.org/3.4.3/d2/de8/group__core__array.html#ga8873b86a29c5af51cafdcee82f8150a7)
+  - first we get the cross correlation heat map with [`cv2.matchTemplate()`](https://docs.opencv.org/3.4.3/df/dfb/group__imgproc__object.html#ga586ebfb0a7fb604b35a23d85391329be)
   - then we get the obstacle position from that map with [`cv2.minMaxLoc()`](https://docs.opencv.org/3.4.3/d2/de8/group__core__array.html#ga8873b86a29c5af51cafdcee82f8150a7)
 
 ![](images/heat_map.png)

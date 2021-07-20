@@ -23,7 +23,7 @@ image = dataset_handler.images[image_nr]
 # plot_image(image, "Image", "gray")
 
 image_rgb = dataset_handler.images_rgb[image_nr]
-# plot_image(image_rgb, "RGB Image")
+plot_image(image_rgb, "RGB Image")
 
 depth = dataset_handler.depth_maps[image_nr]
 # plot_image(depth, "Depth map", "jet")
@@ -79,7 +79,7 @@ matches = match_features(des1, des2, "ORB")
 print("Number of features matched in frames {0} and {1}: {2}".format(
     image_nr, image_nr+1, len(matches)))
 visualize_matches(dataset_handler.images[image_nr], kp_list[image_nr],
-                  dataset_handler.images[image_nr+1], kp_list[image_nr+1], matches, 5)
+                  dataset_handler.images[image_nr+1], kp_list[image_nr+1], matches, 20)
 
 
 best_matches = match_features_knn(des1, des2, "ORB", 2, 0.5)

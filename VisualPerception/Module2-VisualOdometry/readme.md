@@ -7,6 +7,10 @@ To achieve this we will:
 - Use the found matches to estimate the camera motion between subsequent photographs.
 - Use the estimated camera motion to build the vehicle trajectory.
 
+Initial Image:
+
+![](images/initial.png)
+
 ## 1 - Feature Extraction
 
 ### 1.1 - Feature Detection
@@ -52,6 +56,12 @@ Some Feature Extractor Algorithms already work as Descriptor Extractors.
 
 [Checkout how to use some of the feature extraction algorithms here](https://github.com/JoanaMota/SelfDrivingCars/blob/main/VisualPerception/Module2-VisualOdometry/feature_extraction.py)
 
+Feature extraction with:
+
+|          SIFT           |          FAST and BRIEF           |          ORB           |
+| :---------------------: | :-------------------------------: | :--------------------: |
+| ![](images/FE_SIFT.png) | ![](images/FE_FAST_and_BRIEF.png) | ![](images/FE_ORB.png) |
+
 # 2 - [Feature Matching](https://docs.opencv.org/3.4.3/dc/dc3/tutorial_py_matcher.html)
 
 Is basically to match features in one image with others.
@@ -85,6 +95,10 @@ It works faster than BFMatcher for large datasets.
 
 [Checkout how to use some of the feature matching algorithms here](https://github.com/JoanaMota/SelfDrivingCars/blob/main/VisualPerception/Module2-VisualOdometry/feature_matching.py)
 
+Best 20 features matches found with Brute-Force Matcher:
+
+![](images/Best_20_Feature_Matches.png)
+
 # 3 - Trajectory Estimation
 
 So now we reach our end goal, determine the pose of our car, so its Rotation and Translation `[R|t]` matrix. This is called the [Perspective-n-Point](https://en.wikipedia.org/wiki/Perspective-n-Point) problem. Fortunately, OpenCV has a robust implementation of algorithm to solve the PnP in `cv2.solvePnP()` and `cv2.solvePnPRansac()`. These functions take three arguments.
@@ -100,3 +114,7 @@ Transform pixel coordinates to camera coordinates
 > [su;sv;s] = K [R|t] [x;y;z;1]
 
 [Checkout how to estimate the camera trajectory here](https://github.com/JoanaMota/SelfDrivingCars/blob/main/VisualPerception/Module2-VisualOdometry/motion_estimation.py)
+
+Camera movement visualization:
+
+![](images/Camera_Movement_Visualization.png)

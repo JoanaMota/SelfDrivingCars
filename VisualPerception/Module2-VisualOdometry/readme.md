@@ -50,7 +50,7 @@ Some Feature Extractor Algorithms already work as Descriptor Extractors.
 |   BRISK   |    yes    |     yes     |                                                      Binary string based descriptors.                                                      |
 |    ORB    |    yes    |     yes     | Binary string based descriptors. An efficient alternative to SIFT or SURF but FREE. Fusion of FAST keypoint detector and BRIEF descriptor. |
 
-[Checkout how to use some of the feature extraction algorithms here]()
+[Checkout how to use some of the feature extraction algorithms here](https://github.com/JoanaMota/SelfDrivingCars/blob/main/VisualPerception/Module2-VisualOdometry/feature_extraction.py)
 
 # 2 - [Feature Matching](https://docs.opencv.org/3.4.3/dc/dc3/tutorial_py_matcher.html)
 
@@ -83,7 +83,7 @@ Then you have 2 options:
 
 It works faster than BFMatcher for large datasets.
 
-[Checkout how to use some of the feature matching algorithms here]()
+[Checkout how to use some of the feature matching algorithms here](https://github.com/JoanaMota/SelfDrivingCars/blob/main/VisualPerception/Module2-VisualOdometry/feature_matching.py)
 
 # 3 - Trajectory Estimation
 
@@ -99,4 +99,4 @@ Transform pixel coordinates to camera coordinates
 
 > [su;sv;s] = K [R|t] [x;y;z;1]
 
-[Checkout how to estimate the camera trajectory here]()
+[Checkout how to estimate the camera trajectory here](https://github.com/JoanaMota/SelfDrivingCars/blob/main/VisualPerception/Module2-VisualOdometry/motion_estimation.py)

@@ -2,9 +2,9 @@
 
 My notes and exercises from the Coursera SelfDrivingCars Course
 
-## [Applying Stereo Depth to a Driving Scenario]()
+## [Applying Stereo Depth to a Driving Scenario](https://github.com/JoanaMota/SelfDrivingCars/tree/main/VisualPerception/Module1-StereoDepth)
 
-## [Visual Odometry for Localization in Autonomous Driving]()
+## [Visual Odometry for Localization in Autonomous Driving](https://github.com/JoanaMota/SelfDrivingCars/tree/main/VisualPerception/Module2-VisualOdometry)
 
 # Prerequisites
 

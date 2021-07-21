@@ -24,8 +24,6 @@ def match_features(des1, des2, algorithm):
     bf = cv2.BFMatcher(normType, crossCheck=True)
     # Match descriptors.
     matches = bf.match(des1, des2)
-    # Sort them in the order of their distance.
-    matches = sorted(matches, key=lambda x: x.distance)
 
     return matches
 
@@ -142,7 +140,7 @@ def match_features_knn_dataset(des_list, match_features_func, k, ratio):
     while i+1 < len(des_list):
         matches.append(match_features_func(
             des_list[i], des_list[i+1], algorithm, k, ratio))
-        i = +1
+        i += 1
     return matches
 
 

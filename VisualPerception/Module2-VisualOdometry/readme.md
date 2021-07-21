@@ -118,3 +118,9 @@ Transform pixel coordinates to camera coordinates
 Camera movement visualization:
 
 ![](images/Camera_Movement_Visualization.png)
+
+### Camera Trajectory:
+
+![](images/trajectory.png)
+
+Maybe some of the algorithms could be improved to fix that zone with missing point information...

@@ -106,12 +106,10 @@ def extract_features_dataset(images, extract_features_function):
     """
     kp_list = []
     des_list = []
-    image_nr = 0
     for image in images:
         kp, des = extract_features_function(image)
         kp_list.append(kp)
         des_list.append(des)
-        image_nr += 1
 
     return kp_list, des_list
 

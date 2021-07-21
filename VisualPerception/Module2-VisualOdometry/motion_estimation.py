@@ -34,20 +34,21 @@ def estimate_motion(match, kp1, kp2, k, depth1=None):
         m = match[it]
         # get first img matched keypoints
         u1, v1 = kp1[m.queryIdx].pt
-        image1_points.append([u1, v1])
 
         # get second img matched keypoints
         u2, v2 = kp2[m.trainIdx].pt
-        image2_points.append([u2, v2])
 
         s = depth1[int(v1), int(u1)]
-        # Transform pixel coordinates to camera coordinates
-        pixel_coord = np.linalg.inv(k) @ (s * np.array([u1, v1, 1]))
-        objectpoints.append(pixel_coord)
+        if s < 1000:
+            # Transform pixel coordinates to camera coordinates
+            pixel_coord = np.linalg.inv(k) @ (s * np.array([u1, v1, 1]))
+            image2_points.append([u2, v2])
+            image1_points.append([u1, v1])
+            objectpoints.append(pixel_coord)
 
     objectpoints = np.vstack(objectpoints)
     image_points = np.array(image2_points)
-    _, rvec, tvec = cv2.solvePnP(objectpoints, image_points, k, None)
+    _, rvec, tvec, _ = cv2.solvePnPRansac(objectpoints, image_points, k, None)
 
     rmat, _ = cv2.Rodrigues(rvec)
 
@@ -97,8 +98,10 @@ def estimate_trajectory(estimate_motion, matches, kp_list, k, depth_maps=[]):
 
         camera_pose = camera_pose.dot(current_camera_pose)
 
-        camera_pose = camera_pose @ np.array([0., 0., 0., 1.])
+        camera_pose_xyz = camera_pose @ np.array([0., 0., 0., 1.])
 
-        trajectory[:, image_nr + 1] = camera_pose[0:3]
+        trajectory[:, image_nr + 1] = camera_pose_xyz[0:3]
+
+        image_nr += 1
 
     return trajectory

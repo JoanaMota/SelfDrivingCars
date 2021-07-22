@@ -9,28 +9,39 @@ from feature_matching import match_features, visualize_matches, match_features_k
 from motion_estimation import estimate_motion, estimate_trajectory
 from m2bk import visualize_camera_movement, visualize_trajectory
 
-dataset_handler = DatasetHandler(2)
+dataset_handler = DatasetHandler()
 k = dataset_handler.k
-
-# Part 1. Features Extraction
 images = dataset_handler.images
-kp_list, des_list = extract_features_dataset(images, extract_features_orb)
 
+img_nr = 10
+# Part 1. Features Extraction
+print("Extracting Features")
+kp_list, des_list = extract_features_dataset(images, extract_features_orb)
+print("Number of features detected in frame {0}: {1}".format(
+    img_nr, len(kp_list[img_nr])))
+print("Coordinates of the first keypoint in frame {0}: {1}\n".format(
+    img_nr, str(kp_list[img_nr][0].pt)))
+print("Finished Extracting Features")
 
 # Part II. Feature Matching
+print("Feature Matching")
 matches = match_features_dataset(des_list, match_features)
 print(len(matches))
+print("Finished Feature Matching")
+
 # Set to True if you want to use filtered matches or False otherwise
 is_main_filtered_m = True
 if is_main_filtered_m:
     dist_threshold = 0.75
     filtered_matches = filter_matches_dataset(
         filter_matches_distance, matches, dist_threshold)
-
+    matches = filtered_matches
+print(len(matches))
+print("Trajectory Estimation")
 # Part III. Trajectory Estimation
 depth_maps = dataset_handler.depth_maps
 trajectory = estimate_trajectory(
-    estimate_motion, filtered_matches, kp_list, k, depth_maps=depth_maps)
+    estimate_motion, matches, kp_list, k, depth_maps=depth_maps)
 
 
 #!!! Make sure you don't modify the output in any way

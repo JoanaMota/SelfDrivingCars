@@ -3,25 +3,19 @@ import cv2
 from utils import plot_image
 
 
-def match_features(des1, des2, algorithm):
+def match_features(des1, des2):
     """
     Match features from two images
 
     Arguments:
     des1 -- list of the keypoint descriptors in the first image
     des2 -- list of the keypoint descriptors in the second image
-    algorithm -- feature extraction algorithm used
 
     Returns:
     match -- ordered list of matched features from two images. Each match[i] is k or less matches for the same query descriptor
     """
-    if "ORB" == algorithm:
-        normType = cv2.NORM_HAMMING
-    else:
-        print("Invalid Feature Extraction Algorithm")
-        return 0
     # create BFMatcher object
-    bf = cv2.BFMatcher(normType, crossCheck=True)
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
     # Match descriptors.
     matches = bf.match(des1, des2)
 
@@ -112,12 +106,13 @@ def match_features_dataset(des_list, match_features_func):
 
     """
     matches = []
-    algorithm = "ORB"
     i = 0
-    while i < len(des_list)-1:
-        matches.append(match_features_func(
-            des_list[i], des_list[i+1], algorithm))
-        i = +1
+
+    for i in range(len(des_list) - 1):
+        des1 = des_list[i]
+        des2 = des_list[i+1]
+        match = match_features_func(des1, des2)
+        matches.append(match)
     return matches
 
 

@@ -83,25 +83,27 @@ def estimate_trajectory(estimate_motion, matches, kp_list, k, depth_maps=[]):
 
     """
     trajectory = np.zeros((3, len(matches) + 1))
+
+    # Initialize camera pose
     camera_pose = np.eye(4)
 
-    image_nr = 0
-    for match in matches:
-        rmat, tvec, image1_points, image2_points = estimate_motion(match,
-                                                                   kp_list[image_nr],
-                                                                   kp_list[image_nr+1],
-                                                                   k,
-                                                                   depth1=depth_maps[image_nr])
-        current_camera_pose = np.eye(4)
-        current_camera_pose[0:3, 0:3] = rmat
-        current_camera_pose[0:3, 3] = tvec.T
+    # Iterate through the matched features
+    for i in range(len(matches)):
+        # Estimate camera motion between a pair of images
+        rmat, tvec, image1_points, image2_points = estimate_motion(
+            matches[i], kp_list[i], kp_list[i + 1], k, depth_maps[i])
 
-        camera_pose = camera_pose.dot(current_camera_pose)
+        # Determine current pose from rotation and translation matrices
+        current_pose = np.eye(4)
+        current_pose[0:3, 0:3] = rmat
+        current_pose[0:3, 3] = tvec.T
 
-        camera_pose_xyz = camera_pose @ np.array([0., 0., 0., 1.])
+        # Build the robot's pose from the initial position by multiplying previous and current poses
+        camera_pose = camera_pose @ np.linalg.inv(current_pose)
 
-        trajectory[:, image_nr + 1] = camera_pose_xyz[0:3]
+        # Calculate current camera position from origin
+        position = camera_pose @ np.array([0., 0., 0., 1.])
 
-        image_nr += 1
-
+        # Build trajectory
+        trajectory[:, i + 1] = position[0:3]
     return trajectory

@@ -52,4 +52,45 @@ We can estimate any line that qualifies as a lane boundary (line proposals) usin
 2. Perform edge detection on the derived lane boundary image. `cv2.Canny()`
 3. Perform line estimation on the output of edge detection. `cv2.HoughLinesP()`
 
+![](images/Lane_Markings.png)
+
 ### Step 2.2 - Merge and Filter Lane Lines
+
+We need now to merge redundant lines, and filter out any horizontal lines apparent in the image.
+- To merge redundant lines -> group lines with similar slope and intercept.
+- To filter horizontal lines -> slope thresholding.
+
+![](images/Lane_Markings_Merged_and_Filtered.png)
+
+Which gives us one line per lane.
+
+So now we can select the lane markings belonging to the current lane.
+
+![](images/Current_Lane_Markings.png)
+
+
+## Step 3 : Computing Minimum Distance To Impact Using The Output of 2D Object Detection.
+
+We need to determine the minimum distance to impact with objects in the scene.
+
+Objects identified on the scene:
+
+![](images/Detections.png)
+
+### Step 3.1 - Filtering Out Unreliable Detections
+
+This incorrect detections are caused by a high precision, low recall object detector. To solve this problem, the output of the semantic segmentation network has to be used to eliminate unreliable detections.
+
+![](images/Filtered_Detections.png)
+
+
+### Step 3.2 - Estimating Minimum Distance To Impact
+
+This can be performed by simply taking the minimum distance from the pixels in the bounding box to the camera center.
+![](images/Estimated_Distance.png)
+
+
+## :bulb: What we should remember
+- The output of semantic segmentation can be used to estimate drivable space. 
+- Classical computer vision can be used to find lane boundaries. 
+- The output of semantic segmentation can be used to filter out unreliable output from object detection. 
